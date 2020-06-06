@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @types/react-native-infinite-looping-scroll
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add googleapis
 
 PATH: 
   C:\WINDOWS;C:\Windows\System32;C:\Program Files\Java\jdk1.8.0_191\bin;C:\Program Files\nodejs;C:\Users\Hiago\AppData\Roaming\npm\node_modules\@angular\cli\bin;C:\Windows\system32\package.json;C:\Program Files\nodejs\;C:\windows\system32\wbem;"C:\WINDOWS;C:\Windows\System32;C:\Program Files\Java\jdk1.8.0_191\bin;C:\Program Files\nodejs;C:\Users\Hiago\AppData\Roaming\npm\node_modules\@angular\cli\bin;C:\Windows\system32\package.json;C:\Program Files\nodejs\;C:\windows\system32\wbem;";C:\Program Files\MongoDB\Server\4.0\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\system32;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\ProgramData\chocolatey\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\Git\cmd;C:\Users\Hiago\AppData\Local\Android\Sdk\emulator;C:\Users\Hiago\AppData\Roaming\npm;C:\Users\Hiago\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Hiago\AppData\Local\Yarn\bin;c:\Users\Hiago\AppData\Local\Android\Sdk\platform-tools;C:\Users\Hiago\AppData\Local\Microsoft\WindowsApps;C:\Program Files\MySQL\MySQL Server 5.7\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2019.2.1\bin;;C:\Users\Hiago\AppData\Local\Programs\Python\Python37-32\Scripts;C:\Program Files\heroku\bin;C:\MinGW\bin;C:\Users\Hiago\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\Hiago\AppData\Local\Android\Sdk\build-tools\29.0.3;
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-native-infinite-looping-scroll: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65200:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:129590:22)
-      at Request.emit (events.js:189:13)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:130562:10)
-      at Request.emit (events.js:189:13)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:130484:12)
-      at Object.onceWrapper (events.js:277:13)
-      at IncomingMessage.emit (events.js:194:15)
-      at endReadableNT (_stream_readable.js:1125:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Hiago\Documents\Code\MovieSelector\node_modules\@babel\compat-data\node_modules\.bin'
 
 npm manifest: 
   {
@@ -43,7 +33,9 @@ npm manifest:
       "@react-navigation/native": "^5.5.0",
       "@react-navigation/stack": "^5.4.1",
       "expo": "~37.0.3",
+      "expo-av": "~8.1.0",
       "formik": "^2.1.4",
+      "lottie-react-native": "^3.4.0",
       "react": "~16.9.0",
       "react-dom": "~16.9.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
@@ -2258,6 +2250,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
     integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
   
+  dedent@^0.6.0:
+    version "0.6.0"
+    resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.6.0.tgz#0e6da8f0ce52838ef5cec5c8f9396b0c1b64a3cb"
+    integrity sha1-Dm2o8M5Sg471zsXI+TlrDBtko8s=
+  
   deep-assign@^3.0.0:
     version "3.0.0"
     resolved "https://registry.yarnpkg.com/deep-assign/-/deep-assign-3.0.0.tgz#c8e4c4d401cba25550a2f0f486a2e75bc5f219a2"
@@ -2479,6 +2476,14 @@ Lockfile:
       md5-file "^3.2.3"
       path-browserify "^1.0.0"
       url-parse "^1.4.4"
+  
+  expo-av@~8.1.0:
+    version "8.1.0"
+    resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-8.1.0.tgz#376e2a821168cd83e997c6dd84350fab6b293f10"
+    integrity sha512-owWxOCyK+dPyT3pF4rDOf2W8Sn8LSEvfw1HvU9xM0wzH7xF0bw3Zs3wcXxvtfhnXAZ5dCDQfvZI5cXk+lml+IQ==
+    dependencies:
+      lodash "^4.17.15"
+      nullthrows "^1.1.0"
   
   expo-constants@~9.0.0:
     version "9.0.0"
@@ -3559,6 +3564,21 @@ Lockfile:
     dependencies:
       js-tokens "^3.0.0 || ^4.0.0"
   
+  lottie-ios@^3.1.3:
+    version "3.1.8"
+    resolved "https://registry.yarnpkg.com/lottie-ios/-/lottie-ios-3.1.8.tgz#2e9b1f4eae0dfc10bf4c0b3ab6b402c1d590d0fa"
+    integrity sha512-9bgiVn1n+zqWjDPTk4MVWXA+DgVa91payxV2jz8B2dsDFqWtjEqTZaaVo5IqNUExsaC5XkRbziExtTOtzd39tQ==
+  
+  lottie-react-native@^3.4.0:
+    version "3.4.0"
+    resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-3.4.0.tgz#df0887cfd2788d30c383c1e4bb0bd7bbd6fb969f"
+    integrity sha512-ErQJiuptd9koH3NppcNbWAOQXTYUS0ZPpcTM1y+A5jqrTSsZviOLt45nl8aQGpKLpmF21/HmJZuInfoKqvYkRg==
+    dependencies:
+      invariant "^2.2.2"
+      lottie-ios "^3.1.3"
+      prop-types "^15.5.10"
+      react-native-safe-modules "^1.0.0"
+  
   lru-cache@^4.0.1:
     version "4.1.5"
     resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
@@ -4471,7 +4491,7 @@ Lockfile:
       fbjs "^0.8.9"
       loose-envify "^1.3.1"
   
-  prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+  prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
     version "15.7.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4608,6 +4628,13 @@ Lockfile:
     integrity sha512-WII/ulhpVyL/qbYb7vydq7dJAfZRBcEhg4/UWt6F6nAKpLa3gAceMOxBxI914ppwSP/TdUsandFy6lkJQE0z4A==
     dependencies:
       hoist-non-react-statics "^2.3.1"
+  
+  react-native-safe-modules@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/react-native-safe-modules/-/react-native-safe-modules-1.0.0.tgz#10a918adf97da920adb1e33e0c852b1e80123b65"
+    integrity sha512-ShT8duWBT30W4OFcltZl+UvpPDikZFURvLDQqAsrvbyy6HzWPGJDCpdqM+6GqzPPs4DPEW31YfMNmdJcZ6zI2w==
+    dependencies:
+      dedent "^0.6.0"
   
   react-native-screens@~2.2.0:
     version "2.2.0"

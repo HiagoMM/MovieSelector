@@ -7,6 +7,7 @@ import { Audio } from "expo-av";
 import { Card, TextInput, Avatar, useTheme } from "react-native-paper";
 import { Button } from "react-native-paper";
 import LottieView from "lottie-react-native";
+import getImages from "../Services/ImagesService";
 
 // import { Container } from './styles';
 const source = require("../assets/sounds/watchtime.mp3");
@@ -45,6 +46,7 @@ const Home: React.FC = () => {
       items.push(item);
       Storage.setItem("items", items);
     }
+    console.log(getImages(item.name));
   };
   const handleDelete = (ditem: ItemListInterface) => {
     storeItems(items.filter((item) => item.name !== ditem.name));
@@ -79,7 +81,7 @@ const Home: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LottieView
+      {/* <LottieView
         style={{
           width: 500,
           height: 500,
@@ -89,7 +91,7 @@ const Home: React.FC = () => {
         autoPlay
         loop
         source={require("../assets/fireworks.json")}
-      />
+      /> */}
       <Card style={styles.inputCard}>
         <TextInput
           style={styles.input}

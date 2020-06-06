@@ -16,6 +16,7 @@
     "expo": "~37.0.3",
     "expo-av": "~8.1.0",
     "formik": "^2.1.4",
+    "googleapis": "^52.1.0",
     "lottie-react-native": "^3.4.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
