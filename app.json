@@ -1,28 +1,16 @@
 {
   "expo": {
-    "name": "MovieSelector",
-    "slug": "MovieSelector",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.0.0",
-    "orientation": "portrait",
+    "name": "O que vamos ver?",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "version": "1.0.0",
+    "slug": "your-app-slug",
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "br.com.hiagomarques",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "br.com.hiagomarques",
+      "versionCode": 1
     }
   }
 }
