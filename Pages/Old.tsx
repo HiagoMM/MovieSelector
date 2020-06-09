@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import ItemList, { ItemListInterface } from "./ItemList";
+import ItemList, { ItemListInterface } from "../components/ItemList";
 import Storage from "../Services/Storage";
 
 // import { Container } from './styles';

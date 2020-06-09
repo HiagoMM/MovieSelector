@@ -14,6 +14,7 @@ import {
   Provider as PaperProvider,
 } from "react-native-paper";
 import { StatusBar } from "react-native";
+import Celebration from "./Pages/Celebration";
 
 const theme = {
   ...DarkPaper,
@@ -80,6 +81,7 @@ function App() {
             component={TabStack}
             options={{ title: "O que vamos ver?" }}
           />
+          <Stack.Screen name="Celebration" component={Celebration} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

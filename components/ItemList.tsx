@@ -1,19 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
-// import { Container } from './styles';
 import {
-  Avatar,
-  Button,
-  Card,
-  Title,
-  Paragraph,
-  TouchableRipple,
-} from "react-native-paper";
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Image,
+  ImageBackground,
+} from "react-native";
+// import { Container } from './styles';
+import { Avatar, Card, Badge } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useTheme } from "react-native-paper";
 
 export interface ItemListInterface {
   name: string;
+  img?: string;
   value: number;
   handleDelete?(item: ItemListInterface): any;
 }
@@ -21,8 +23,11 @@ export interface ItemListInterface {
 const ItemList: React.FC<ItemListInterface> = ({
   name,
   value,
+  img,
   handleDelete,
 }) => {
+  const theme = useTheme();
+
   const LeftContent = (props: any) =>
     handleDelete && (
       <TouchableOpacity onPress={() => handleDelete({ name, value })}>
@@ -30,17 +35,19 @@ const ItemList: React.FC<ItemListInterface> = ({
       </TouchableOpacity>
     );
   const RigthContent = (props: any) => (
-    <Avatar.Text
-      size={35}
-      label={value.toString()}
-      style={{ marginRight: 20 }}
-    />
+    <View>
+      <Avatar.Text label={value?.toString()} size={40}></Avatar.Text>
+    </View>
   );
-
   return name ? (
-    <Card style={styles.container}>
-      <Card.Title title={name} left={LeftContent} right={RigthContent} />
-    </Card>
+    <ImageBackground source={{ uri: img }} style={styles.container}>
+      <Card.Title
+        title={<Text style={{ textTransform: "capitalize" }}>{name}</Text>}
+        left={LeftContent}
+        right={RigthContent}
+        style={{ backgroundColor: "#000000b5" }}
+      />
+    </ImageBackground>
   ) : (
     <></>
   );
@@ -51,6 +58,7 @@ export default ItemList;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 5,
-    borderRadius: 10,
+    resizeMode: "stretch",
+    borderRadius: 20,
   },
 });

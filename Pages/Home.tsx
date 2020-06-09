@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import ItemList, { ItemListInterface } from "./ItemList";
-import { View, StyleSheet, SafeAreaView, Alert } from "react-native";
+import ItemList, { ItemListInterface } from "../components/ItemList";
+import { View, StyleSheet, SafeAreaView, Alert, Image } from "react-native";
 import Storage from "../Services/Storage";
 import { Audio } from "expo-av";
-import { Card, TextInput, Avatar, useTheme } from "react-native-paper";
-import { Button } from "react-native-paper";
-import LottieView from "lottie-react-native";
-import getImages from "../Services/ImagesService";
+import { Card, TextInput, Avatar, useTheme, Portal } from "react-native-paper";
+import { Button, Modal } from "react-native-paper";
+import http from "../Services/http";
+import { useNavigation } from "@react-navigation/native";
 
 // import { Container } from './styles';
 const source = require("../assets/sounds/watchtime.mp3");
@@ -30,9 +30,12 @@ const ValueComp = (props: any) => {
 
 const Home: React.FC = () => {
   const theme = useTheme();
+  const navigation = useNavigation();
   const [items, setItems] = useState<ItemListInterface[]>([]);
   const [input, setInput] = useState("");
   const [value, setValue] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState([]);
   useEffect(() => {
     Storage.getItem("items").then((items) => setItems(items || []));
   });
@@ -42,11 +45,29 @@ const Home: React.FC = () => {
   };
 
   const handleSave = (item: ItemListInterface) => {
-    if (item.name) {
-      items.push(item);
-      Storage.setItem("items", items);
-    }
-    console.log(getImages(item.name));
+    const soundObject = new Audio.Sound();
+
+    soundObject
+      .loadAsync(source)
+      .then(() => console.log("Load"))
+      .then(() => {
+        soundObject.playAsync().then(() => {
+          navigation.navigate("Celebration", {
+            name: "Rick and morty",
+            img:
+              "https://br.web.img3.acsta.net/newsv7/19/05/15/17/35/0837341.jpg",
+          });
+        });
+      });
+    http
+      .get("/images", { params: { name: item.name } })
+      .then((res) => {
+        if (item.name) {
+          setShowModal(true);
+          setModalData(res.data);
+        }
+      })
+      .catch((err) => console.log(err));
   };
   const handleDelete = (ditem: ItemListInterface) => {
     storeItems(items.filter((item) => item.name !== ditem.name));
@@ -61,40 +82,36 @@ const Home: React.FC = () => {
         }
       });
       const selected = aux[Math.floor(Math.random() * aux.length)];
-      storeItems(items.filter((item) => item?.name !== selected?.name));
-      Storage.getItem("history").then((hitems) => {
-        if (!hitems) hitems = [];
-        hitems.push(selected);
-        Storage.setItem("history", hitems);
-      });
       const soundObject = new Audio.Sound();
       try {
         await Audio.requestPermissionsAsync();
         await Audio.getPermissionsAsync();
         await soundObject.loadAsync(source).then(() => console.log("Load"));
 
-        await soundObject.playAsync();
+        await soundObject.playAsync().then(() => {
+          navigation.navigate("Celebration", selected);
+          storeItems(items.filter((item) => item?.name !== selected?.name));
+          Storage.getItem("history").then((hitems) => {
+            if (!hitems) hitems = [];
+            hitems.push(selected);
+            Storage.setItem("history", hitems);
+          });
+        });
       } catch (error) {}
-      Alert.alert(selected.name, JSON.stringify(aux));
     }
+  };
+  const handleSelectImage = (img: string | undefined) => {
+    const item: ItemListInterface = { name: input, value };
+    item.img = img;
+    items.push(item);
+    Storage.setItem("items", items);
+    setShowModal(false);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <LottieView
-        style={{
-          width: 500,
-          height: 500,
-          backgroundColor: "#ffffff00",
-          position: "absolute",
-        }}
-        autoPlay
-        loop
-        source={require("../assets/fireworks.json")}
-      /> */}
       <Card style={styles.inputCard}>
         <TextInput
-          style={styles.input}
           label="Digite o nome"
           value={input}
           onChangeText={(text) => setInput(text)}
@@ -138,6 +155,39 @@ const Home: React.FC = () => {
       >
         Hora de assistir
       </Button>
+      <Portal>
+        <Modal
+          visible={showModal}
+          contentContainerStyle={{
+            width: "90%",
+            alignSelf: "center",
+            flexDirection: "row",
+            flexWrap: "wrap",
+          }}
+        >
+          <Card
+            style={{
+              borderRadius: 10,
+            }}
+          >
+            <Card.Content
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              {modalData.map((img) => (
+                <TouchableOpacity
+                  key={img}
+                  onPress={() => handleSelectImage(img)}
+                >
+                  <Image source={{ uri: img }} style={styles.image} />
+                </TouchableOpacity>
+              ))}
+            </Card.Content>
+          </Card>
+        </Modal>
+      </Portal>
     </SafeAreaView>
   );
 };
@@ -148,6 +198,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     alignItems: "center",
+    justifyContent: "center",
     height: "100%",
     flexDirection: "column",
   },
@@ -163,6 +214,7 @@ const styles = StyleSheet.create({
   inputCard: {
     width: "90%",
     marginBottom: 20,
+
     padding: 5,
     borderRadius: 10,
   },
@@ -174,10 +226,14 @@ const styles = StyleSheet.create({
     width: "60%",
     height: 60,
   },
-  input: {},
   valuesContainer: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  image: {
+    width: 145,
+    height: 145,
+    margin: 5,
   },
   buttonContainer: {
     width: "40%",
