@@ -45,20 +45,6 @@ const Home: React.FC = () => {
   };
 
   const handleSave = (item: ItemListInterface) => {
-    const soundObject = new Audio.Sound();
-
-    soundObject
-      .loadAsync(source)
-      .then(() => console.log("Load"))
-      .then(() => {
-        soundObject.playAsync().then(() => {
-          navigation.navigate("Celebration", {
-            name: "Rick and morty",
-            img:
-              "https://br.web.img3.acsta.net/newsv7/19/05/15/17/35/0837341.jpg",
-          });
-        });
-      });
     http
       .get("/images", { params: { name: item.name } })
       .then((res) => {

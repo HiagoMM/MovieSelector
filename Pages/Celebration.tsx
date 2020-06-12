@@ -1,24 +1,84 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LottieView from "lottie-react-native";
 import { ItemListInterface } from "../components/ItemList";
-import { View, Text, BackHandler, Animated, Easing } from "react-native";
+import { View, Animated, Easing, ImageBackground } from "react-native";
+import {
+  useRoute,
+  useNavigation,
+  CompositeNavigationProp,
+} from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-interface Celebration extends ItemListInterface {}
-
-const Celebration: React.FC<Celebration> = ({ name }) => {
+const Celebration: React.FC<any> = (props) => {
   const position = useRef(new Animated.Value(-100)).current;
+  const secondTime = useRef(new Animated.Value(0)).current;
+  const [explode, setExplode] = useState(false);
+  const route = useRoute<any>();
+  const { img, name } = route.params;
   const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
   useEffect(() => {
+    setTimeout(() => setExplode(true), 8000);
     Animated.timing(position, {
       toValue: 20,
       duration: 7000,
       easing: Easing.ease,
     }).start();
+    Animated.timing(secondTime, {
+      toValue: 900,
+      duration: 1000,
+      delay: 7000,
+    }).start();
   });
   return (
     <View
-      style={{ height: "100%", alignItems: "center", justifyContent: "center" }}
+      style={{
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+      }}
     >
+      <Animated.View
+        style={{
+          width: "100%",
+          height: "50%",
+          position: "absolute",
+          zIndex: 10,
+        }}
+      >
+        {explode && (
+          <AnimatedLottieView
+            style={{
+              backgroundColor: "#ffffff00",
+            }}
+            autoSize
+            autoPlay
+            resizeMode="cover"
+            source={require("../assets/explosion.json")}
+          />
+        )}
+      </Animated.View>
+      <Animated.View
+        style={{
+          width: "100%",
+          height: "50%",
+          position: "absolute",
+          top: secondTime.interpolate({
+            inputRange: [0, 900],
+
+            outputRange: [1500, 160],
+          }),
+        }}
+      >
+        <ImageBackground
+          source={{ uri: img }}
+          resizeMode="cover"
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        ></ImageBackground>
+      </Animated.View>
       <Animated.View
         style={{
           position: "absolute",
@@ -89,37 +149,86 @@ const Celebration: React.FC<Celebration> = ({ name }) => {
           source={require("../assets/drumm.json")}
         />
       </Animated.View>
-
-      <AnimatedLottieView
+      <Animated.View
         style={{
           width: 500,
           height: 500,
           position: "absolute",
-          right: 0,
-          top: 0,
-          backgroundColor: "#ffffff00",
+          left: secondTime.interpolate({
+            inputRange: [0, 900],
+            outputRange: [900, 0],
+          }),
         }}
-        autoPlay
-        loop
-        autoSize
-        resizeMode="cover"
-        source={require("../assets/fireworks.json")}
-      />
-      <AnimatedLottieView
+      >
+        <AnimatedLottieView
+          style={{
+            bottom: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#ffffff00",
+          }}
+          autoPlay
+          speed={2}
+          loop
+          autoSize
+          resizeMode="cover"
+          source={require("../assets/fireworks.json")}
+        />
+      </Animated.View>
+      <Animated.View
         style={{
-          width: 400,
-          height: 400,
+          width: 200,
+          height: 200,
           position: "absolute",
-          right: 0,
           top: 0,
-          backgroundColor: "#ffffff00",
+          right: secondTime.interpolate({
+            inputRange: [0, 900],
+            outputRange: [900, 100],
+          }),
         }}
-        autoPlay
-        loop
-        autoSize
-        resizeMode="cover"
-        source={require("../assets/fireworks.json")}
-      />
+      >
+        <AnimatedLottieView
+          style={{
+            width: "100%",
+            height: "100%",
+            top: 0,
+            backgroundColor: "#ffffff00",
+          }}
+          autoPlay
+          loop
+          speed={3}
+          autoSize
+          resizeMode="cover"
+          source={require("../assets/fireworks.json")}
+        />
+      </Animated.View>
+      <Animated.View
+        style={{
+          width: 200,
+          height: 200,
+          position: "absolute",
+          top: 100,
+          right: secondTime.interpolate({
+            inputRange: [0, 900],
+            outputRange: [900, 200],
+          }),
+        }}
+      >
+        <AnimatedLottieView
+          style={{
+            width: "100%",
+            height: "100%",
+            top: 0,
+            backgroundColor: "#ffffff00",
+          }}
+          autoPlay
+          loop
+          autoSize
+          speed={2}
+          resizeMode="cover"
+          source={require("../assets/fireworks.json")}
+        />
+      </Animated.View>
       <Animated.View
         style={{
           width: position.interpolate({
@@ -130,6 +239,7 @@ const Celebration: React.FC<Celebration> = ({ name }) => {
             inputRange: [-100, 20],
             outputRange: [30, 400],
           }),
+          marginTop: secondTime,
         }}
       >
         <AnimatedLottieView
